@@ -17,6 +17,42 @@ the reviewed drafts do not drift apart.
 Two substitutions are made when porting: the effective date is set to the
 publication date, and the contact placeholder becomes `info@soundsidedesign.com`.
 
+## DNS cutover (one-time, needs the registrar's 2FA)
+
+The pages are built and waiting; the apex still resolves to Squarespace's
+parking page. In Squarespace → Domains → wingedfoot.ai → DNS Settings:
+
+1. Delete the **Squarespace Defaults** preset (trash icon). It holds the four
+   parking `A @` records, `CNAME www`, and — the one that actually matters — an
+   `HTTPS @` record whose `ipv4hint` re-advertises the parking IPs. Leaving that
+   behind makes browsers reach Squarespace even after the A records change.
+2. Under **Custom records**, add four `A` records for `@`:
+
+   ```
+   185.199.108.153
+   185.199.109.153
+   185.199.110.153
+   185.199.111.153
+   ```
+
+3. Optional: `CNAME www → soundside-design.github.io`.
+4. Then, in this repo's Settings → Pages, tick **Enforce HTTPS** once GitHub has
+   issued the certificate (a few minutes after DNS propagates).
+
+**Do not touch the existing custom records** `A box`, `A turn` (both
+`34.60.110.56`) or `CAA box` — those are the appliance's public edge and are
+unrelated to this site. Do not add a CAA record at the apex; there is none
+today, and one would inherit down to `box` and can break certificate renewal
+there.
+
+Verify afterwards:
+
+```bash
+dig +short wingedfoot.ai A            # expect the four 185.199.x addresses
+curl -sI https://wingedfoot.ai/privacy | head -1
+curl -sI https://box.wingedfoot.ai/ | head -1   # must still answer (404 is correct)
+```
+
 ## Deliberately not here
 
 `box.wingedfoot.ai` and `turn.wingedfoot.ai` are separate subdomain records
