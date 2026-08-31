@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wingedfoot</title>
+<meta name="description" content="A private voice line to the AI agent running on hardware your household owns.">
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1a1a1a; --muted: #5c5c5c;
+    --rule: #e4e4e4; --accent: #0a63d6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #131313; --fg: #ededed; --muted: #a0a0a0; --rule: #2c2c2c; --accent: #6aa8ff; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap { max-width: 40rem; margin: 0 auto; padding: 4rem 1.5rem 5rem; }
+  h1 { font-size: 2.1rem; line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 .4rem; }
+  .tag { color: var(--muted); font-size: 1.1rem; margin: 0 0 2.5rem; }
+  h2 { font-size: 1.05rem; letter-spacing: .02em; text-transform: uppercase;
+       color: var(--muted); margin: 2.5rem 0 .75rem; font-weight: 600; }
+  p { margin: 0 0 1rem; }
+  ul { padding-left: 1.2rem; margin: 0 0 1rem; }
+  li { margin-bottom: .5rem; }
+  a { color: var(--accent); }
+  .note { border-left: 3px solid var(--rule); padding-left: 1rem; color: var(--muted); }
+  footer { margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule);
+           color: var(--muted); font-size: .92rem; }
+  footer a { margin-right: 1.25rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Wingedfoot</h1>
+  <p class="tag">A private voice line to the AI agent running on hardware your household owns.</p>
+
+  <p>Wingedfoot is an iPhone app that talks to an appliance your family runs — a
+  computer in your home, not a service we operate. Conversations go to that
+  machine. Soundside Design runs no backend that receives them.</p>
+
+  <h2>How it works</h2>
+  <ul>
+    <li>The line is full-duplex and interruptible. Speak whenever you want, and
+        interrupting actually stops the agent, not just the audio.</li>
+    <li>Every call has a live written transcript. Nothing said aloud is only aloud.</li>
+    <li>Each person in the household gets their own agent, their own memory, and
+        their own credentials — not a shared login.</li>
+    <li>A phone joins by scanning a short-lived code and being approved by the
+        household admin. No VPN app required.</li>
+  </ul>
+
+  <h2>Requires an appliance</h2>
+  <p>This is a companion app. Without a household appliance running the Wingedfoot
+  server, it has nothing to connect to.</p>
+
+  <h2>Status</h2>
+  <p class="note">Wingedfoot is in private beta with a small number of households.
+  There is no public sign-up yet.</p>
+
+  <footer>
+    <a href="/privacy/">Privacy</a>
+    <a href="/support/">Support</a>
+    <a href="mailto:info@soundsidedesign.com">Contact</a>
+    <p>© Soundside Design LLC</p>
+  </footer>
+
+</div>
+</body>
+</html>
