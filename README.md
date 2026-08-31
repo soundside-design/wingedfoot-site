@@ -19,19 +19,24 @@ publication date, and the contact placeholder becomes `info@soundsidedesign.com`
 
 ## Status
 
-DNS cutover **done** 2026-08-30: the Squarespace Defaults preset was deleted and
-the apex now has GitHub's four `A` records. The pages serve correctly over HTTP.
+**Live.** `https://wingedfoot.ai` serves the landing, `/privacy` and `/support`
+pages over TLS (Let's Encrypt, issued 2026-08-31), with HTTP 301-redirecting and
+**Enforce HTTPS** on. DNS cutover completed 2026-08-30.
 
-**HTTPS is pending GitHub's own DNS health check**, which lagged behind the old
-records' 4-hour TTL. Check it with:
+Two gotchas worth remembering if this is ever redone:
 
-```bash
-gh api repos/soundside-design/wingedfoot-site/pages/health --jq '{valid:.domain.is_valid, served:.domain.is_served_by_pages, reason:.domain.reason}'
-```
+- Deleting the Squarespace "Defaults" preset matters more than the `A` records.
+  It also carries an `HTTPS` record whose `ipv4hint` re-advertises the parking
+  IPs, so removing only the `A` records leaves browsers reaching Squarespace.
+- GitHub will not request a certificate until its own DNS health check passes,
+  and that check lagged behind the old records' 4-hour TTL. When it stalls past
+  that, the documented remedy — unsetting and re-setting the custom domain,
+  which GitHub does by deleting and recreating `CNAME` in this repo — retriggers
+  provisioning. Watch it with:
 
-Once `valid` is true, GitHub issues the certificate automatically; then enable
-**Enforce HTTPS** (Settings → Pages, or `gh api -X PUT repos/soundside-design/wingedfoot-site/pages -f https_enforced=true`).
-Do not hand Apple the privacy URL until HTTPS answers.
+  ```bash
+  gh api repos/soundside-design/wingedfoot-site/pages/health --jq '{valid:.domain.is_valid, served:.domain.is_served_by_pages}'
+  ```
 
 ## DNS cutover, as executed (kept for reference / disaster recovery)
 
