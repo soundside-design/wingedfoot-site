@@ -17,7 +17,23 @@ the reviewed drafts do not drift apart.
 Two substitutions are made when porting: the effective date is set to the
 publication date, and the contact placeholder becomes `info@soundsidedesign.com`.
 
-## DNS cutover (one-time, needs the registrar's 2FA)
+## Status
+
+DNS cutover **done** 2026-08-30: the Squarespace Defaults preset was deleted and
+the apex now has GitHub's four `A` records. The pages serve correctly over HTTP.
+
+**HTTPS is pending GitHub's own DNS health check**, which lagged behind the old
+records' 4-hour TTL. Check it with:
+
+```bash
+gh api repos/soundside-design/wingedfoot-site/pages/health --jq '{valid:.domain.is_valid, served:.domain.is_served_by_pages, reason:.domain.reason}'
+```
+
+Once `valid` is true, GitHub issues the certificate automatically; then enable
+**Enforce HTTPS** (Settings → Pages, or `gh api -X PUT repos/soundside-design/wingedfoot-site/pages -f https_enforced=true`).
+Do not hand Apple the privacy URL until HTTPS answers.
+
+## DNS cutover, as executed (kept for reference / disaster recovery)
 
 The pages are built and waiting; the apex still resolves to Squarespace's
 parking page. In Squarespace → Domains → wingedfoot.ai → DNS Settings:
